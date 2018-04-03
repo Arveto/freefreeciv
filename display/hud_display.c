@@ -17,7 +17,7 @@
 //Basic functions (reused in several Huds)
 void basicDisplay(SDL_Renderer * renderer, SDL_Texture * texture, struct game game, view camera, int countdown, int isMainHud){
 	//Warning: Does not include RenderPresent
-	//Renders map, player indocator, countdown,
+	//Renders map, player indicator, countdown,
 
 	float fontFactor = 0.9;	//Font opening size and surface size are different
 	SDL_Rect srcRect;
@@ -130,8 +130,9 @@ void basicDisplay(SDL_Renderer * renderer, SDL_Texture * texture, struct game ga
 
 //Huds
 void mainDisplay(SDL_Renderer * renderer, SDL_Texture * texture, struct game game, view camera, int countdown){
-	basicDisplay(renderer, texture, game, camera, countdown, 1);
+	//Best function ever
 
+	basicDisplay(renderer, texture, game, camera, countdown, 1);
 	SDL_RenderPresent(renderer);
 }
 
@@ -150,7 +151,7 @@ void peasantDisplay(SDL_Renderer * renderer, SDL_Texture * texture, struct game 
 	//Stats
 	TTF_Font * font = TTF_OpenFont("resources/8bit.ttf", TILE_SIZE);
 	SDL_Color white = {255, 255, 255};
-	char text [6];
+	char text [3];
 
 	SDL_Rect srcRect;
 	SDL_Rect destRect;
@@ -159,7 +160,7 @@ void peasantDisplay(SDL_Renderer * renderer, SDL_Texture * texture, struct game 
 	//Life
 	blitSprite(renderer, texture, 7, 25, 0, SCREEN_HEIGHT/2-TILE_SIZE*1.5*3/2, TILE_SIZE*1.5);
 
-	sprintf(text, "%dI%d", game.players[game.currentPlayer].units[peasantId].life, game.players[game.currentPlayer].units[peasantId].maxLife);
+	sprintf(text, "%d", game.players[game.currentPlayer].units[peasantId].life);
 
 	SDL_Surface * life = TTF_RenderText_Solid(font, text, white);
 	SDL_Texture * textTexture = SDL_CreateTextureFromSurface(renderer, life);
@@ -175,7 +176,7 @@ void peasantDisplay(SDL_Renderer * renderer, SDL_Texture * texture, struct game 
 	//Movements
 	blitSprite(renderer, texture, 4, 16, 0, SCREEN_HEIGHT/2-TILE_SIZE*1.5/2, TILE_SIZE*1.5);
 
-	sprintf(text, "%dI%d", game.players[game.currentPlayer].units[peasantId].movements, game.players[game.currentPlayer].units[peasantId].maxMovements);
+	sprintf(text, "%d", game.players[game.currentPlayer].units[peasantId].movements);
 
 	SDL_Surface * movements = TTF_RenderText_Solid(font, text, white);
 	textTexture = SDL_CreateTextureFromSurface(renderer, movements);
@@ -260,7 +261,7 @@ void soldierDisplay(SDL_Renderer * renderer, SDL_Texture * texture, struct game 
 	//Stats
 	TTF_Font * font = TTF_OpenFont("resources/8bit.ttf", TILE_SIZE);
 	SDL_Color white = {255, 255, 255};
-	char text [6];
+	char text [3];
 
 	SDL_Rect srcRect;
 	SDL_Rect destRect;
@@ -269,7 +270,7 @@ void soldierDisplay(SDL_Renderer * renderer, SDL_Texture * texture, struct game 
 	//Life
 	blitSprite(renderer, texture, 7, 25, 0, SCREEN_HEIGHT/2-TILE_SIZE*1.5*3/2, TILE_SIZE*1.5);
 
-	sprintf(text, "%dI%d", game.players[game.currentPlayer].units[soldierId].life, game.players[game.currentPlayer].units[soldierId].maxLife);
+	sprintf(text, "%d", game.players[game.currentPlayer].units[soldierId].life);
 
 	SDL_Surface * life = TTF_RenderText_Solid(font, text, white);
 	SDL_Texture * textTexture = SDL_CreateTextureFromSurface(renderer, life);
@@ -285,7 +286,7 @@ void soldierDisplay(SDL_Renderer * renderer, SDL_Texture * texture, struct game 
 	//Movements
 	blitSprite(renderer, texture, 4, 16, 0, SCREEN_HEIGHT/2-TILE_SIZE*1.5/2, TILE_SIZE*1.5);
 
-	sprintf(text, "%dI%d", game.players[game.currentPlayer].units[soldierId].movements, game.players[game.currentPlayer].units[soldierId].maxMovements);
+	sprintf(text, "%d", game.players[game.currentPlayer].units[soldierId].movements);
 
 	SDL_Surface * movements = TTF_RenderText_Solid(font, text, white);
 	textTexture = SDL_CreateTextureFromSurface(renderer, movements);
@@ -349,7 +350,7 @@ void buildingDisplay(SDL_Renderer * renderer, SDL_Texture * texture, struct game
 	//Stats
 	TTF_Font * font = TTF_OpenFont("resources/8bit.ttf", TILE_SIZE);
 	SDL_Color white = {255, 255, 255};
-	char text [6];
+	char text [3];
 
 	SDL_Rect srcRect;
 	SDL_Rect destRect;
@@ -358,7 +359,7 @@ void buildingDisplay(SDL_Renderer * renderer, SDL_Texture * texture, struct game
 	//Life
 	blitSprite(renderer, texture, 7, 25, 0, SCREEN_HEIGHT/2-TILE_SIZE*0.75, TILE_SIZE*1.5);
 
-	sprintf(text, "%dI%d", game.players[game.currentPlayer].buildings[buildingId].life, game.players[game.currentPlayer].buildings[buildingId].maxLife);
+	sprintf(text, "%d", game.players[game.currentPlayer].buildings[buildingId].life);
 
 	SDL_Surface * life = TTF_RenderText_Solid(font, text, white);
 	SDL_Texture * textTexture = SDL_CreateTextureFromSurface(renderer, life);
@@ -448,7 +449,7 @@ void foreignDisplay(SDL_Renderer * renderer, SDL_Texture * texture, struct game 
 	//Stats
 	TTF_Font * font = TTF_OpenFont("resources/8bit.ttf", TILE_SIZE);
 	SDL_Color white = {255, 255, 255};
-	char text [6];
+	char text [3];
 
 	SDL_Rect srcRect;
 	SDL_Rect destRect;
@@ -458,9 +459,9 @@ void foreignDisplay(SDL_Renderer * renderer, SDL_Texture * texture, struct game 
 	blitSprite(renderer, texture, 7, 25, 0, SCREEN_HEIGHT/2-TILE_SIZE*0.75, TILE_SIZE*1.5);
 
 	if(isUnit)
-		sprintf(text, "%dI%d", game.players[ownerId].units[tokenId].life, game.players[ownerId].units[tokenId].maxLife);
+		sprintf(text, "%d", game.players[ownerId].units[tokenId].life);
 	else
-		sprintf(text, "%dI%d", game.players[ownerId].buildings[tokenId].life, game.players[ownerId].buildings[tokenId].maxLife);
+		sprintf(text, "%d", game.players[ownerId].buildings[tokenId].life);
 
 	SDL_Surface * life = TTF_RenderText_Solid(font, text, white);
 	SDL_Texture * textTexture = SDL_CreateTextureFromSurface(renderer, life);

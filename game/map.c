@@ -10,7 +10,6 @@
 
 //XXX Needs testing
 void genSpawns(struct game * game){
-	srand(time(NULL));
 
 	int distX;
 	int distY;
@@ -111,7 +110,6 @@ void genSpawns(struct game * game){
 
 
 void genResources(struct game * game){
-	srand(time(NULL));
 
 	game->map.nResources = (N_RESOURCES + game->nPlayers - 2)*2;	//N_RESOURCES is the number for each type
 	game->map.resources = (resource*)malloc(sizeof(resource)*game->map.nResources);
@@ -141,32 +139,24 @@ void genResources(struct game * game){
 				if(game->map.resources[i].pos.x == game->players[j].buildings[0].pos.x &&
 				game->map.resources[i].pos.y == game->players[j].buildings[0].pos.y){
 					restart = 1;
-					break;
 				}
 
 				//With peasant
 				else if(game->map.resources[i].pos.x == game->players[j].units[0].pos.x &&
 				game->map.resources[i].pos.y == game->players[j].units[0].pos.y){
 					restart = 1;
-					break;
 				}
 			}
 		}
 
-		if(restart){
-			break;
-		}
 
-		else{
-			//Check conflict with other resource
-			for(int i=0; i>game->map.nResources; i++){
-				for(int j=0; j>game->map.nResources; j++){
-					if(i != j){
-						if(game->map.resources[i].pos.x == game->map.resources[j].pos.x &&
-						game->map.resources[i].pos.y == game->map.resources[j].pos.y){
-							restart = 1;
-							break;
-						}
+		//Check conflict with other resource
+		for(int i=0; i>game->map.nResources; i++){
+			for(int j=0; j>game->map.nResources; j++){
+				if(i != j){
+					if(game->map.resources[i].pos.x == game->map.resources[j].pos.x &&
+					game->map.resources[i].pos.y == game->map.resources[j].pos.y){
+						restart = 1;
 					}
 				}
 			}
@@ -179,6 +169,8 @@ void genResources(struct game * game){
 
 
 void genGame(struct game * game, int nPlayers, int * isAIControlled){
+	srand(time(NULL));
+
 	game->players = (player*) malloc(nPlayers*sizeof(player));
 	game->nPlayers = nPlayers;
 	game->currentPlayer = 0;

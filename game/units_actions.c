@@ -6,7 +6,6 @@
 #include "../include/game/structures_init.h"
 
 
-//XXX NEEDS TESTING
 
 int checkMap(struct game game, coord pos){
     //Iterates all game objects to check if a tile is free
@@ -27,6 +26,10 @@ int checkMap(struct game game, coord pos){
     for(int i=0; i<game.map.nResources; i++){
         if(game.map.resources[i].pos.x == pos.x && game.map.resources[i].pos.y == pos.y)
             tileIsOccupied = 1;
+    }
+
+    if(pos.x > 15 || pos.y > 15 || pos.x < 1 || pos.y < 1){
+        tileIsOccupied = 1;
     }
 
     return tileIsOccupied;
@@ -187,21 +190,22 @@ void attack(struct game * game, int unitId, coord targetPos){
                         game->players[i].buildings[j].life -= game->players[game->currentPlayer].units[unitId].attack;
 
                         //Death of building (not city)
-                        if(game->players[i].buildings[j].life <= 0 && game->players[i].buildings[j].type != CITY){                              game->players[i].nBuildings--;
-                              building * newBuildings;    //Reallocating buildings
-                              newBuildings = (building*) malloc(game->players[i].nBuildings * sizeof(building));
+                        if(game->players[i].buildings[j].life <= 0 && game->players[i].buildings[j].type != CITY){
+                            game->players[i].nBuildings--;
+                            building * newBuildings;    //Reallocating buildings
+                            newBuildings = (building*) malloc(game->players[i].nBuildings * sizeof(building));
 
-                              int id = 0; //Idem units
-                              for(int k=0; k<game->players[i].nBuildings; k++){
+                            int id = 0; //Idem units
+                            for(int k=0; k<game->players[i].nBuildings; k++){
 
-                                  if(k != j){
-                                      newBuildings[id] = game->players[i].buildings[k];
-                                      id++;
-                                  }
-                              }
+                                if(k != j){
+                                  newBuildings[id] = game->players[i].buildings[k];
+                                  id++;
+                                }
+                            }
 
-                                  free(game->players[i].buildings);
-                                  game->players[i].buildings = newBuildings;
+                            free(game->players[i].buildings);
+                            game->players[i].buildings = newBuildings;
                         }
 
 
@@ -229,7 +233,7 @@ void attack(struct game * game, int unitId, coord targetPos){
 // :p
 
 
-//TODO Substract resources
+
 void createPeasant(struct game * game, coord pos, int cityId){
     int distX = abs(game->players[game->currentPlayer].buildings[cityId].pos.x - pos.x);
     int distY = abs(game->players[game->currentPlayer].buildings[cityId].pos.y - pos.y);
