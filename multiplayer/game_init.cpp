@@ -57,8 +57,7 @@ int wsConnect(SDL_Renderer * renderer, SDL_Texture * texture, Mix_Music * music)
 	 }
 
 	 if(!quit){
-	    //ws = WebSocket::from_url(SERVER_ADRRESS);
-	    ws = WebSocket::from_url("ws://port-8080.freefreeciv-server-olivierworkk493832.codeanyapp.com");
+	    ws = WebSocket::from_url(SERVER_ADRRESS);
 	    assert(ws);
 
 	    //Send pseudo

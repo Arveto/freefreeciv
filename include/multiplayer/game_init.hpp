@@ -23,7 +23,7 @@
 #define AI 1
 #define PLAYER 2
 
-#define SERVER_ADRRESS "ws://127.0.0.1:8080"
+#define SERVER_ADRRESS "ws://port-4242.freefreeciv-adelval87489142.codeanyapp.com"
 
 typedef struct{
     char * pseudo;

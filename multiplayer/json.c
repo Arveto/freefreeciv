@@ -116,6 +116,8 @@ int parsePlayers(mPlayer ** players, const char * jString){
     return nPlayers;
 }
 
+
+
 void serializeHost(char ** host, const char * jString){
     json_object * json = json_tokener_parse(jString);
 
@@ -127,6 +129,8 @@ void serializeHost(char ** host, const char * jString){
     free(jHost);
     printf("Host = %s\n", *host);
 }
+
+
 
 char * serializePlayerSelf(char * pseudo, int nPlayers, int roomId){
     //Allows  to create a player JSON string for yourself
