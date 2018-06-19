@@ -40,7 +40,7 @@ int main(int argc, char** argv){
 	TTF_Init();
 
 	//***** Main menu *****
-	//splashScreen(renderer);
+	splashScreen(renderer);
 	mainMenu(renderer, texture);
 
 	SDL_DestroyWindow(window);
